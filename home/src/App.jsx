@@ -1,24 +1,28 @@
-import React from 'react';
-import Navigation from './components/Navigation';
-import Header from './components/Header';
-import About from './components/About';
-import Projects from './components/Projects';
-import Signup from './components/Signup';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import HomePage from './pages/HomePage';
+import keycloak from "./Keycloak.js";
+import PrivateRoute from "./helpers/PrivateRoute.jsx";
+import ProtectedPage from "./pages/Protected.jsx";
 
 function App() {
   return (
-    <div>
-      <Navigation />
-      <Header />
-      <About />
-      <Projects />
-      <Signup />
-      <Contact />
-      <Footer />
-    </div>
+  <ReactKeycloakProvider authClient={keycloak}>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<HomePage/>} />
+        <Route
+            path="/secured"
+            element={
+              <PrivateRoute>
+                <ProtectedPage />
+              </PrivateRoute>
+            }
+        />
+      </Routes>
+    </BrowserRouter>
+  </ReactKeycloakProvider>
   );
 }
 

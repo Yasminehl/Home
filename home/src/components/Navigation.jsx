@@ -1,7 +1,10 @@
-import React from 'react';
+import useAuth from "../hooks/useAuth.jsx";
+import {Link} from "react-router-dom";
 
 
 function Navigation() {
+  const { register, user } = useAuth();
+  console.log("user: ", user)
   return (
     <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div className="container px-4 px-lg-5">
@@ -19,7 +22,11 @@ function Navigation() {
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item"><a className="nav-link" href="#about">Home</a></li>
+            <li className="nav-item"><a className="nav-link" href="/secured">Docs</a></li>
             <li className="nav-item"><a className="nav-link" href="#signup">Contact</a></li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/register" onClick={register}>Register</Link>
+            </li>
           </ul>
         </div>
       </div>
